@@ -3,11 +3,16 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 // ----------------------------------------------------------------------
-// 메인 페이지 컴포넌트
+// 로그인 페이지 컴포넌트
 // ----------------------------------------------------------------------
 
-const Main = () => {
+const Signin = () => {
   const navigate = useNavigate();
+
+  // Form 제출 핸들링
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+  };
 
   // 회원가입 버튼 핸들링
   const handleSignupBtn = () => {
@@ -28,7 +33,7 @@ const Main = () => {
           <Typography component="h1" variant="h5" sx={{ mb: 3 }}>
             로그인
           </Typography>
-          <form>
+          <form onSubmit={handleFormSubmit}>
             <TextField
               required
               fullWidth
@@ -69,4 +74,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default Signin;
