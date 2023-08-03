@@ -1,7 +1,7 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signinService } from "../../service/authService";
+import { signinService } from "../../../service/authService";
 
 // ----------------------------------------------------------------------
 // 로그인 페이지 컴포넌트

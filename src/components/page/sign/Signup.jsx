@@ -1,7 +1,7 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signupService } from "../../service/authService";
+import { signupService } from "../../../service/authService";
 
 // ----------------------------------------------------------------------
 // 회원가입 페이지 컴포넌트
@@ -12,7 +12,6 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPwValid, setIsPwValid] = useState(false);
-
   const navigate = useNavigate();
 
   // 이메일 Input 핸들링
