@@ -1,6 +1,6 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
-import Main from "./components/page/Main";
+import { Navigate, Route, Routes } from "react-router-dom";
+import Signin from "./components/page/Signin";
 import Signup from "./components/page/Signup";
 
 // ----------------------------------------------------------------------
@@ -10,7 +10,8 @@ import Signup from "./components/page/Signup";
 const Router = () => {
   return (
     <Routes>
-      <Route path="/" element={<Main />} />
+      <Route path="/" element={<Navigate to="/signin" />} replace />
+      <Route path="/signin" element={<Signin />} />
       <Route path="/signup" element={<Signup />} />
     </Routes>
   );
