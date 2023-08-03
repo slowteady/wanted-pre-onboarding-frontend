@@ -1,11 +1,19 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 // ----------------------------------------------------------------------
 // 메인 페이지 컴포넌트
 // ----------------------------------------------------------------------
 
 const Main = () => {
+  const navigate = useNavigate();
+
+  // 회원가입 버튼 핸들링
+  const handleSignupBtn = () => {
+    navigate("/signup");
+  };
+
   return (
     <>
       <Container sx={{ height: "80vh" }}>
@@ -51,7 +59,9 @@ const Main = () => {
             >
               로그인
             </Button>
-            <Button size="medium">회원가입</Button>
+            <Button onClick={handleSignupBtn} size="medium">
+              회원가입
+            </Button>
           </form>
         </Box>
       </Container>
