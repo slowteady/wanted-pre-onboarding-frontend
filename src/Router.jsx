@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import Auth from "./components/hoc/Auth";
+import { Auth, SignAuth } from "./components/hoc/Auth";
 import Signin from "./components/page/sign/Signin";
 import Signup from "./components/page/sign/Signup";
 import TodoList from "./components/page/todo/TodoList";
@@ -16,17 +16,17 @@ const Router = () => {
       <Route
         path="/signin"
         element={
-          <Auth isException={true}>
+          <SignAuth>
             <Signin />
-          </Auth>
+          </SignAuth>
         }
       />
       <Route
         path="/signup"
         element={
-          <Auth isException={true}>
+          <SignAuth>
             <Signup />
-          </Auth>
+          </SignAuth>
         }
       />
       <Route
