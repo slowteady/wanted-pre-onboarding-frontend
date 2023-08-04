@@ -40,38 +40,6 @@ export const addTodoService = async (body) => {
   }
 };
 
-// Todo 리스트 삭제 요청
-export const deleteTodoService = async (id) => {
-  try {
-    const access_token = localStorage.getItem("JWT");
-    const response = await axios.delete(
-      `${API.PRE_ONBOARDING_API_URL}${API.TODOS}/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
-    const { status } = response;
-    let isSuccess = false;
-
-    // Todo 삭제 성공
-    if (status === 204) {
-      isSuccess = true;
-    }
-
-    return { isSuccess };
-  } catch (err) {
-    console.error(err);
-    const msg = "예상치 못한 문제가 발생했습니다";
-
-    return {
-      isSuccess: false,
-      msg,
-    };
-  }
-};
-
 // Todo 리스트 요청
 export const getTodoService = async () => {
   try {
@@ -93,6 +61,72 @@ export const getTodoService = async () => {
     }
 
     return { isSuccess, data };
+  } catch (err) {
+    console.error(err);
+    const msg = "예상치 못한 문제가 발생했습니다";
+
+    return {
+      isSuccess: false,
+      msg,
+    };
+  }
+};
+
+// Todo 리스트 수정 요청
+export const editTodoService = async (id, body) => {
+  try {
+    const access_token = localStorage.getItem("JWT");
+    const response = await axios.put(
+      `${API.PRE_ONBOARDING_API_URL}${API.TODOS}/${id}`,
+      body,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    const { status } = response;
+    let isSuccess = false;
+
+    // Todo 수정 성공
+    if (status === 200) {
+      isSuccess = true;
+    }
+
+    return { isSuccess };
+  } catch (err) {
+    console.error(err);
+    const msg = "예상치 못한 문제가 발생했습니다";
+
+    return {
+      isSuccess: false,
+      msg,
+    };
+  }
+};
+
+// Todo 리스트 삭제 요청
+export const deleteTodoService = async (id) => {
+  try {
+    const access_token = localStorage.getItem("JWT");
+    const response = await axios.delete(
+      `${API.PRE_ONBOARDING_API_URL}${API.TODOS}/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    const { status } = response;
+    let isSuccess = false;
+
+    // Todo 삭제 성공
+    if (status === 204) {
+      isSuccess = true;
+    }
+
+    return { isSuccess };
   } catch (err) {
     console.error(err);
     const msg = "예상치 못한 문제가 발생했습니다";
