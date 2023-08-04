@@ -1,15 +1,44 @@
-import { Button } from "@mui/material";
+import { Button, Input } from "@mui/material";
 import React, { useState } from "react";
+import { deleteTodoService } from "../../../service/todoService";
 
 // ----------------------------------------------------------------------
 // Todo 아이템 컴포넌트
 // ----------------------------------------------------------------------
 
-const TodoItems = ({ id, isCompleted, text }) => {
+const TodoItems = ({ id, isCompleted, text, onEdit, onDelete }) => {
   const [checked, setChecked] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [inputText, setInputText] = useState(text);
 
   const handleChkBoxChange = (e) => {
     setChecked(e.currentTarget.checked);
+
+    onEdit();
+  };
+
+  // 수정 버튼 클릭
+  const handleEditBtn = () => {
+    setIsEdit(true);
+  };
+
+  // 삭제 버튼 클릭
+  const handleDeleteBtn = async () => {
+    const response = await deleteTodoService(id);
+    const { isSuccess, msg } = response;
+
+    if (isSuccess) {
+      onDelete();
+    } else {
+      alert(msg);
+      return;
+    }
+  };
+
+  // 취소 버튼 클릭
+  const handleCancelBtn = () => {
+    setIsEdit(false);
+    setInputText(text);
   };
 
   return (
@@ -20,13 +49,54 @@ const TodoItems = ({ id, isCompleted, text }) => {
           onChange={handleChkBoxChange}
           checked={checked}
         />
-        <span>{text}</span>
-        <Button variant="contained" size="small" sx={{ m: 1 }}>
-          수정
-        </Button>
-        <Button variant="contained" size="small" color="error">
-          삭제
-        </Button>
+        {isEdit ? (
+          <>
+            <Input
+              value={inputText}
+              onChange={(e) => setInputText(e.currentTarget.value)}
+            />
+            <Button
+              onClick={handleEditBtn}
+              variant="contained"
+              size="small"
+              data-testid="submit-button"
+              sx={{ m: 1 }}
+            >
+              제출
+            </Button>
+            <Button
+              onClick={handleCancelBtn}
+              variant="contained"
+              size="small"
+              data-testid="cancel-button"
+              color="error"
+            >
+              취소
+            </Button>
+          </>
+        ) : (
+          <>
+            <span>{text}</span>
+            <Button
+              onClick={handleEditBtn}
+              variant="contained"
+              size="small"
+              data-testid="modify-button"
+              sx={{ m: 1 }}
+            >
+              수정
+            </Button>
+            <Button
+              onClick={handleDeleteBtn}
+              variant="contained"
+              size="small"
+              data-testid="delete-button"
+              color="error"
+            >
+              삭제
+            </Button>
+          </>
+        )}
       </label>
     </li>
   );
