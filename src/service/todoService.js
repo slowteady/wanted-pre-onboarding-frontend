@@ -2,15 +2,15 @@ import axios from "axios";
 import API from "../config/API";
 
 // ----------------------------------------------------------------------
-// TODO 관련 서비스
+// Todo 관련 서비스
 // ----------------------------------------------------------------------
 
-// TODO 추가 요청
+// Todo 추가 요청
 export const addTodoService = async (body) => {
   try {
     const access_token = localStorage.getItem("JWT");
     const response = await axios.post(
-      `${API.PRE_ONBOARDING_API_URL}${API.ADD_TODOS}`,
+      `${API.PRE_ONBOARDING_API_URL}${API.TODOS}`,
       body,
       {
         headers: {
@@ -23,12 +23,44 @@ export const addTodoService = async (body) => {
     const { status, data } = response;
     let isSuccess = false;
 
-    // TODO 추가 성공
+    // Todo 추가 성공
     if (status === 201) {
       isSuccess = true;
     }
+    
+    return { isSuccess, data };
+  } catch (err) {
+    console.error(err);
+    const msg = "예상치 못한 문제가 발생했습니다";
 
-    return { isSuccess, payload: data };
+    return {
+      isSuccess: false,
+      msg,
+    };
+  }
+};
+
+// Todo 리스트 요청
+export const getTodoService = async () => {
+  try {
+    const access_token = localStorage.getItem("JWT");
+    const response = await axios.get(
+      `${API.PRE_ONBOARDING_API_URL}${API.TODOS}`,
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    const { status, data } = response;
+    let isSuccess = false;
+
+    // Todo Load 성공
+    if (status === 200) {
+      isSuccess = true;
+    }
+
+    return { isSuccess, data };
   } catch (err) {
     console.error(err);
     const msg = "예상치 못한 문제가 발생했습니다";
