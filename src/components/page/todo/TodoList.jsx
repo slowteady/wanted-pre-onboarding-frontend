@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 
 // ----------------------------------------------------------------------
-// TODO 리스트 컴포넌트
+// Todo 리스트 컴포넌트
 // ----------------------------------------------------------------------
 
 const TodoList = () => {
@@ -15,8 +15,7 @@ const TodoList = () => {
       >
         TODO
       </Typography>
-      <Box sx={{ flex: 1, overflowY: "auto", mb: 3 }}>
-      </Box>
+      <Box sx={{ flex: 1, overflowY: "auto", mb: 3 }}></Box>
     </>
   );
 };
