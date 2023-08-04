@@ -13,7 +13,7 @@ const TodoList = () => {
         variant="h5"
         sx={{ mb: 3, textAlign: "center" }}
       >
-        TODO
+        Todo
       </Typography>
       <Box sx={{ flex: 1, overflowY: "auto", mb: 3 }}></Box>
     </>
