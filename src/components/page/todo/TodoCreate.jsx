@@ -1,31 +1,32 @@
 import { Box, Button, Input } from "@mui/material";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { addTodoService } from "../../../service/todoService";
-import { TodoDispatchContext } from "../../state/todo/Context";
 
 // ----------------------------------------------------------------------
-// TODO 생성 컴포넌트
+// Todo 생성 컴포넌트
 // ----------------------------------------------------------------------
 
-const TodoCreate = () => {
-  const dispatch = useContext(TodoDispatchContext);
+const TodoCreate = ({ onAdd }) => {
   const [value, setValue] = useState("");
 
-  // TODO 입력 시
-  const handleFormSubmit = (e) => {
+  // Todo 입력 시
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
+
+    // 빈값 방지
+    if (value.trim() === "") {
+      alert("할 일을 입력해주세요");
+      return;
+    }
 
     const body = {
       todo: value,
     };
-    const response = addTodoService(body);
+    const response = await addTodoService(body);
     const { isSuccess, msg } = response;
 
     if (isSuccess) {
-      dispatch({
-        type: "CREATE",
-        todo: value,
-      });
+      onAdd();
       setValue("");
     } else {
       alert(msg);
@@ -48,7 +49,9 @@ const TodoCreate = () => {
           placeholder=" 할 일을 입력해주세요"
           sx={{ mr: 1 }}
         />
-        <Button variant="contained">추가</Button>
+        <Button variant="contained" type="submit">
+          추가
+        </Button>
       </Box>
     </form>
   );
