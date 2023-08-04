@@ -6,7 +6,7 @@ import TodoItems from "./TodoItems";
 // Todo 리스트 컴포넌트
 // ----------------------------------------------------------------------
 
-const TodoList = ({ todos }) => {
+const TodoList = ({ todos, onEdit, onDelete }) => {
   return (
     <>
       <Typography
@@ -26,6 +26,8 @@ const TodoList = ({ todos }) => {
                 id={id}
                 text={todo}
                 isCompleted={isCompleted}
+                onEdit={onEdit}
+                onDelete={onDelete}
               />
             );
           })}
