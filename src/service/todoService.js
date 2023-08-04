@@ -27,8 +27,40 @@ export const addTodoService = async (body) => {
     if (status === 201) {
       isSuccess = true;
     }
-    
+
     return { isSuccess, data };
+  } catch (err) {
+    console.error(err);
+    const msg = "예상치 못한 문제가 발생했습니다";
+
+    return {
+      isSuccess: false,
+      msg,
+    };
+  }
+};
+
+// Todo 리스트 삭제 요청
+export const deleteTodoService = async (id) => {
+  try {
+    const access_token = localStorage.getItem("JWT");
+    const response = await axios.delete(
+      `${API.PRE_ONBOARDING_API_URL}${API.TODOS}/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    const { status } = response;
+    let isSuccess = false;
+
+    // Todo 삭제 성공
+    if (status === 204) {
+      isSuccess = true;
+    }
+
+    return { isSuccess };
   } catch (err) {
     console.error(err);
     const msg = "예상치 못한 문제가 발생했습니다";
