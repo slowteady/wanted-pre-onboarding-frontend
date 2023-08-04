@@ -10,7 +10,12 @@ export const signupService = async (body) => {
   try {
     const response = await axios.post(
       `${API.PRE_ONBOARDING_API_URL}${API.SIGN_UP}`,
-      body
+      body,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
     const { status } = response;
     let isSuccess = false;
@@ -41,7 +46,12 @@ export const signinService = async (body) => {
   try {
     const response = await axios.post(
       `${API.PRE_ONBOARDING_API_URL}${API.SIGN_IN}`,
-      body
+      body,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
     const { status } = response;
     const { access_token } = response.data;
