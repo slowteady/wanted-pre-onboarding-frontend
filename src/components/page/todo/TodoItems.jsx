@@ -1,6 +1,9 @@
 import { Button, Input } from "@mui/material";
 import React, { useState } from "react";
-import { deleteTodoService } from "../../../service/todoService";
+import {
+  deleteTodoService,
+  editTodoService,
+} from "../../../service/todoService";
 
 // ----------------------------------------------------------------------
 // Todo 아이템 컴포넌트
@@ -35,6 +38,24 @@ const TodoItems = ({ id, isCompleted, text, onEdit, onDelete }) => {
     }
   };
 
+  // 제출 버튼 클릭
+  const handleSubmitBtn = async () => {
+    const body = {
+      todo: inputText,
+      isCompleted,
+    };
+    const response = await editTodoService(id, body);
+    const { isSuccess, msg } = response;
+
+    if (isSuccess) {
+      setIsEdit(false);
+      onEdit();
+    } else {
+      alert(msg);
+      return;
+    }
+  };
+
   // 취소 버튼 클릭
   const handleCancelBtn = () => {
     setIsEdit(false);
@@ -56,7 +77,7 @@ const TodoItems = ({ id, isCompleted, text, onEdit, onDelete }) => {
               onChange={(e) => setInputText(e.currentTarget.value)}
             />
             <Button
-              onClick={handleEditBtn}
+              onClick={handleSubmitBtn}
               variant="contained"
               size="small"
               data-testid="submit-button"
