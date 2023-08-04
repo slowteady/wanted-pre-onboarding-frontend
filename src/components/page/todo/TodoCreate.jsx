@@ -48,8 +48,15 @@ const TodoCreate = ({ onAdd }) => {
           fullWidth
           placeholder=" 할 일을 입력해주세요"
           sx={{ mr: 1 }}
+          inputProps={{
+            "data-testid": "new-todo-input",
+          }}
         />
-        <Button variant="contained" type="submit">
+        <Button
+          variant="contained"
+          type="submit"
+          data-testid="new-todo-add-button"
+        >
           추가
         </Button>
       </Box>
