@@ -15,11 +15,6 @@ const TodoIndex = () => {
     getTodoData();
   }, []);
 
-  // Todo 추가
-  const handleAdd = () => {
-    getTodoData();
-  };
-
   // Todo 데이터 요청
   const getTodoData = async () => {
     const response = await getTodoService();
@@ -35,8 +30,8 @@ const TodoIndex = () => {
 
   return (
     <TodoLayout>
-      <TodoList todos={todos} />
-      <TodoCreate onAdd={handleAdd} />
+      <TodoList todos={todos} onEdit={getTodoData} onDelete={getTodoData} />
+      <TodoCreate onAdd={getTodoData} />
     </TodoLayout>
   );
 };
