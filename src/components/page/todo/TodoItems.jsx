@@ -1,4 +1,4 @@
-import { Button, Input } from "@mui/material";
+import { Box, Button, Input, styled } from "@mui/material";
 import React, { useState } from "react";
 import {
   deleteTodoService,
@@ -9,24 +9,33 @@ import {
 // Todo 아이템 컴포넌트
 // ----------------------------------------------------------------------
 
+const Li = styled("li")({
+  margin: "10px 0",
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+});
+
+const Label = styled("label")({
+  display: "inline-block",
+});
+
 const TodoItems = ({ id, isCompleted, text, onEdit, onDelete }) => {
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(isCompleted);
   const [isEdit, setIsEdit] = useState(false);
   const [inputText, setInputText] = useState(text);
 
   const handleChkBoxChange = (e) => {
     setChecked(e.currentTarget.checked);
-
-    onEdit();
   };
 
-  // 수정 버튼 클릭
   const handleEditBtn = () => {
     setIsEdit(true);
   };
 
-  // 삭제 버튼 클릭
   const handleDeleteBtn = async () => {
+    // Todo 삭제 요청
     const response = await deleteTodoService(id);
     const { isSuccess, msg } = response;
 
@@ -38,12 +47,18 @@ const TodoItems = ({ id, isCompleted, text, onEdit, onDelete }) => {
     }
   };
 
-  // 제출 버튼 클릭
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSubmitBtn();
+    }
+  };
+
   const handleSubmitBtn = async () => {
     const body = {
       todo: inputText,
-      isCompleted,
+      isCompleted: checked,
     };
+    // Todo 수정 요청
     const response = await editTodoService(id, body);
     const { isSuccess, msg } = response;
 
@@ -56,26 +71,32 @@ const TodoItems = ({ id, isCompleted, text, onEdit, onDelete }) => {
     }
   };
 
-  // 취소 버튼 클릭
   const handleCancelBtn = () => {
     setIsEdit(false);
     setInputText(text);
   };
 
   return (
-    <li style={{ width: "100%", margin: "10px 0" }}>
-      <label>
-        <input
-          type="checkbox"
-          onChange={handleChkBoxChange}
-          checked={checked}
-        />
-        {isEdit ? (
-          <>
+    <Li>
+      {isEdit ? (
+        <>
+          <Label>
+            <input
+              type="checkbox"
+              onChange={handleChkBoxChange}
+              checked={checked}
+            />
             <Input
               value={inputText}
+              onKeyDown={handleKeyDown}
               onChange={(e) => setInputText(e.currentTarget.value)}
+              sx={{ pl: 1, width: "300px" }}
+              inputProps={{
+                "data-testid": "modify-input",
+              }}
             />
+          </Label>
+          <Box sx={{ display: "inline-block" }}>
             <Button
               onClick={handleSubmitBtn}
               variant="contained"
@@ -94,10 +115,19 @@ const TodoItems = ({ id, isCompleted, text, onEdit, onDelete }) => {
             >
               취소
             </Button>
-          </>
-        ) : (
-          <>
-            <span>{text}</span>
+          </Box>
+        </>
+      ) : (
+        <>
+          <Label>
+            <input
+              type="checkbox"
+              onChange={handleChkBoxChange}
+              checked={checked}
+            />
+            <span style={{ paddingLeft: "8px" }}>{text}</span>
+          </Label>
+          <Box sx={{ display: "inline-block" }}>
             <Button
               onClick={handleEditBtn}
               variant="contained"
@@ -116,10 +146,10 @@ const TodoItems = ({ id, isCompleted, text, onEdit, onDelete }) => {
             >
               삭제
             </Button>
-          </>
-        )}
-      </label>
-    </li>
+          </Box>
+        </>
+      )}
+    </Li>
   );
 };
 
