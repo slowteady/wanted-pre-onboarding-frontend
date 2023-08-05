@@ -26,8 +26,30 @@ const TodoItems = ({ id, isCompleted, text, onEdit, onDelete }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [inputText, setInputText] = useState(text);
 
+  // 수정 요청 함수
+  const editFunction = async (body) => {
+    const response = await editTodoService(id, body);
+    const { isSuccess, msg } = response;
+
+    if (isSuccess) {
+      setIsEdit(false);
+      onEdit();
+    } else {
+      alert(msg);
+      return;
+    }
+  };
+
   const handleChkBoxChange = (e) => {
-    setChecked(e.currentTarget.checked);
+    const isChecked = e.currentTarget.checked;
+    setChecked(isChecked);
+
+    const body = {
+      todo: inputText,
+      isCompleted: isChecked,
+    };
+    // Todo 수정 요청
+    editFunction(body);
   };
 
   const handleEditBtn = () => {
@@ -56,19 +78,10 @@ const TodoItems = ({ id, isCompleted, text, onEdit, onDelete }) => {
   const handleSubmitBtn = async () => {
     const body = {
       todo: inputText,
-      isCompleted: checked,
+      isCompleted,
     };
     // Todo 수정 요청
-    const response = await editTodoService(id, body);
-    const { isSuccess, msg } = response;
-
-    if (isSuccess) {
-      setIsEdit(false);
-      onEdit();
-    } else {
-      alert(msg);
-      return;
-    }
+    editFunction(body);
   };
 
   const handleCancelBtn = () => {
