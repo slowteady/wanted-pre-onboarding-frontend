@@ -1,7 +1,7 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signinService } from "../../../service/authService";
+import { signinService } from "../../../service/signService";
 
 // ----------------------------------------------------------------------
 // 로그인 페이지 컴포넌트
@@ -14,19 +14,16 @@ const Signin = () => {
   const [isPwValid, setIsPwValid] = useState(false);
   const navigate = useNavigate();
 
-  // 이메일 Input 핸들링
   const handleEmailInput = (e) => {
     setEmail(e.currentTarget.value);
     setIsEmailValid(e.currentTarget.value.includes("@"));
   };
 
-  // 패스워드 Input 핸들링
   const handlePwInput = (e) => {
     setPassword(e.currentTarget.value);
     setIsPwValid(e.currentTarget.value.length >= 8);
   };
 
-  // Form 제출 핸들링
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
@@ -48,7 +45,6 @@ const Signin = () => {
     }
   };
 
-  // 회원가입 버튼 핸들링
   const handleSignupBtn = () => {
     navigate("/signup");
   };

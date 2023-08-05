@@ -9,7 +9,6 @@ import { addTodoService } from "../../../service/todoService";
 const TodoCreate = ({ onAdd }) => {
   const [value, setValue] = useState("");
 
-  // Todo 입력 시
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
@@ -22,6 +21,7 @@ const TodoCreate = ({ onAdd }) => {
     const body = {
       todo: value,
     };
+    // Todo 추가 요청
     const response = await addTodoService(body);
     const { isSuccess, msg } = response;
 
