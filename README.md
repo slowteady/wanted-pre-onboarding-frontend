@@ -61,3 +61,7 @@ npm start
 - React-Router-Dom
 - MUI
 - Axios
+
+### 코드리뷰  
+
+[코드리뷰용 소스분석](https://github.com/slowteady/wanted-pre-onboarding-frontend/blob/main/source-guide.md)
